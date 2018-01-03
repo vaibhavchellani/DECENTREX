@@ -1197,7 +1197,7 @@ module.exports = {
   ],
   ethTestnet: false,
   ethProvider: 'http://localhost:8545',
-  ethGasPrice: 20000000000,
+  ethGasPrice: 40000000000,
   ethAddr: '0x0000000000000000000000000000000000000000',
   ethAddrPrivateKey: '',
   gasApprove: 250000,
@@ -1214,6 +1214,8 @@ module.exports = {
   etherscanAPIKey: 'KF9ADFTHP4WJF1GV3WHJZCTFZIN5XZUXG1',
      tokens: [
    { addr: '0x0000000000000000000000000000000000000000', name: 'ETH', decimals: 18 },
+   { addr: '0x53b49e0eaf4a1b9b0233ae41089cbb656dce6df7', name: 'NEW', decimals: 18 },
+
 { addr: '0x8e10f6bb9c973d61321c25a2b8d865825f4aa57b', name: '0ED', decimals: 18 },
 { addr: '0xe701cd3329057aea9d54300ddd05e41b8d74727a', name: '10MT', decimals: 10 },
 { addr: '0x9742fa8cb51d294c8267ddfead8582e16f18e421', name: '10MTI', decimals: 10 },
@@ -1885,6 +1887,7 @@ module.exports = {
   ],
   defaultPair: { token: '1ST', base: 'ETH' },
   pairs: [
+{ token: 'NEW', base: 'ETH' },  
 { token: '0ED', base: 'ETH' },
 { token: '10MT', base: 'ETH' },
 { token: '10MTI', base: 'ETH' },
@@ -2569,7 +2572,7 @@ module.exports = {
   ],
   ethTestnet: 'ropsten',
   ethProvider: 'http://localhost:8545',
-  ethGasPrice: 20000000000,
+  ethGasPrice: 40000000000,
   ethAddr: '0x0000000000000000000000000000000000000000',
   ethAddrPrivateKey: '',
   gasApprove: 250000,
@@ -4710,6 +4713,7 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
       this.selectedBase = this.selectedToken;
       this.selectedToken = temp;
     }
+    console.log("hey")
     console.log('Beginning refresh', new Date(), `${this.selectedToken.name}/${this.selectedBase.name}`);
     this.selectedContract = this.config.contractDecentrExAddr;
     utility.createCookie(
@@ -124458,4 +124462,3 @@ exports.createContext = Script.createContext = function (context) {
 arguments[4][322][0].apply(exports,arguments)
 },{"dup":322}]},{},[4])(4)
 });
-

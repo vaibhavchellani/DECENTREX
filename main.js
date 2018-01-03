@@ -1103,8 +1103,10 @@ DecentrEx.prototype.displayOrderbook = function displayOrderbook(ordersIn, block
   this.depthChart('chartDepth', '', '', '', depthDataFiltered, median * 0.25, median * 1.75);
   callback();
 };
+
 DecentrEx.prototype.displayTokensAndBases = function displayTokensAndBases(callback) {
   const tokens = this.config.tokens.map(x => x);
+  console.log("heyyyyyy");
   tokens.sort((a, b) => (a.name > b.name ? 1 : -1));
   this.ejs(`${this.config.homeURL}/templates/tokensDropdown.ejs`, 'tokensDropdown', {
     tokens,
@@ -1892,6 +1894,7 @@ DecentrEx.prototype.getDivisor = function getDivisor(tokenOrAddress) {
 };
 DecentrEx.prototype.getToken = function getToken(addrOrToken, name, decimals) {
   let result;
+  console.log("inside getToken");
   const lowerAddrOrToken = typeof addrOrToken === 'string' ? addrOrToken.toLowerCase() : addrOrToken;
   const matchingTokens = this.config.tokens.filter(
     x => x.addr.toLowerCase() === lowerAddrOrToken ||
@@ -1918,7 +1921,10 @@ DecentrEx.prototype.getToken = function getToken(addrOrToken, name, decimals) {
   }
   return result;
 };
+
+
 DecentrEx.prototype.loadToken = function loadToken(addr, callback) {
+  console.log("load token"+${this.config.homeURL});
   let token = this.getToken(addr);
   if (token) {
     callback(null, token);
@@ -1969,8 +1975,11 @@ DecentrEx.prototype.selectBase = function selectBase(addrOrToken, name, decimals
   }
 };
 DecentrEx.prototype.selectTokenAndBase = function selectTokenAndBase(tokenAddr, baseAddr) {
+
   const token = this.getToken(tokenAddr);
   const base = this.getToken(baseAddr);
+  console.log(token);
+  console.log("here");
   if (token && base) {
     this.loading(() => {});
     this.refresh(() => {}, true, true, token, base);
@@ -1978,11 +1987,12 @@ DecentrEx.prototype.selectTokenAndBase = function selectTokenAndBase(tokenAddr, 
       hitType: 'event',
       eventCategory: 'Token',
       eventAction: 'Select Pair',
-      eventLabel: `${this.selectedToken.name}/${this.selectedBase.name}`,
+      eventLabel: `${this.selectedToken.name}/${this.selectedBase.name}`,*/
     });
   }
 };
 DecentrEx.prototype.displayBuySell = function displayBuySell(callback) {
+  console.log("main.js"+${this.config.homeURL});
   this.ejs(`${this.config.homeURL}/templates/buy.ejs`, 'buy', {
     selectedToken: this.selectedToken,
     selectedBase: this.selectedBase,
@@ -2111,6 +2121,7 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
       this.selectedBase = this.selectedToken;
       this.selectedToken = temp;
     }
+    console.log("this is refresh");
     console.log('Beginning refresh', new Date(), `${this.selectedToken.name}/${this.selectedBase.name}`);
     this.selectedContract = this.config.contractDecentrExAddr;
     utility.createCookie(

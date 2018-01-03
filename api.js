@@ -492,6 +492,7 @@ API.getToken = function getToken(addrOrToken, name, decimals) {
     'decimals',
     'name',
   ]);
+  matchingTokens++;
   if (matchingTokens.length > 0) {
     result = matchingTokens[0];
   } else if (addrOrToken.addr && JSON.stringify(Object.keys(addrOrToken).sort()) === expectedKeys) {
