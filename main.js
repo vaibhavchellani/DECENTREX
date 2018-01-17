@@ -380,6 +380,18 @@ DecentrEx.prototype.selectLanguage = function selectLanguage(newLanguage) {
     eventLabel: newLanguage,
   });
 };
+/*
+
+  1. stores last block of event stored
+  2. hits events api with last block as param
+  3. gets all events after the last block
+  4, updates stored events of found
+  5. if not reaches catch and shows no more events found
+  6. users with orders to update has the address of user who`s order has to be updated
+  7. in case its a trade the order book of both the parties involved is updated
+  8. if its deposit , withdraw or something else only the user who sent the order
+  9. deletes old events too
+ */
 DecentrEx.prototype.loadEvents = function loadEvents(callback) {
   let lastBlock = 0;
   Object.keys(this.eventsCache).forEach((id) => {
@@ -556,6 +568,7 @@ function displayMyTransactions(ordersIn, blockNumber, callback) {
     }
   });
   myEvents.sort((a, b) => b.id - a.id);
+
   // pending transactions
   async.map(
     this.pendingTransactions,
@@ -930,6 +943,13 @@ function lineChart(elem, title, xtype, ytype, xtitle, ytitle, data) {
     }
   });
 };
+/**
+ * for getting orders by pair using /orders endpoint , tokena and tokenb sent as params
+ * @param tokenA
+ * @param tokenB
+ * @param callback
+ * gives out orders for specific token pair
+ */
 DecentrEx.prototype.getOrdersByPair = function getOrdersByPair(tokenA, tokenB, callback) {
   utility.getURL(`${this.config.apiServer}/orders/${this.apiServerNonce}/${tokenA}/${tokenB}`, (err, result) => {
     if (!err && result !== 'error') {
@@ -973,6 +993,11 @@ DecentrEx.prototype.getOrdersByPair = function getOrdersByPair(tokenA, tokenB, c
     }
   });
 };
+/**
+ * This returns every pair that has traded in the past 24 hours.
+ * usign the returnticker endpoint
+ * @param callback
+ */
 DecentrEx.prototype.getReturnTicker = function getTopOrders(callback) {
   utility.getURL(`${this.config.apiServer}/returnTicker`, (err, result) => {
     if (!err && result !== 'error') {
@@ -987,6 +1012,11 @@ DecentrEx.prototype.getReturnTicker = function getTopOrders(callback) {
     }
   });
 };
+
+/**
+ * gets top order using /toporder endpoint
+ * @param callback
+ */
 DecentrEx.prototype.getTopOrders = function getTopOrders(callback) {
   utility.getURL(`${this.config.apiServer}/topOrders/${this.apiServerNonce}`, (err, result) => {
     if (!err) {
@@ -1028,6 +1058,14 @@ DecentrEx.prototype.getTopOrders = function getTopOrders(callback) {
     }
   });
 };
+/**
+ *
+ * has only one call in refresh
+ * @param ordersIn (this.OrderResultByPair.order)
+ * @param blockNumber(this.OrderResultByPair.Block
+ * @param callback(console.log statement)
+ *
+ */
 DecentrEx.prototype.displayOrderbook = function displayOrderbook(ordersIn, blockNumber, callback) {
   // only look at orders for the selected token and base
   let orders = ordersIn.filter(
@@ -1103,10 +1141,12 @@ DecentrEx.prototype.displayOrderbook = function displayOrderbook(ordersIn, block
   this.depthChart('chartDepth', '', '', '', depthDataFiltered, median * 0.25, median * 1.75);
   callback();
 };
-
+/**
+ * for displaying all tokens in the drop down
+ * @param callback
+ */
 DecentrEx.prototype.displayTokensAndBases = function displayTokensAndBases(callback) {
   const tokens = this.config.tokens.map(x => x);
-  console.log("heyyyyyy");
   tokens.sort((a, b) => (a.name > b.name ? 1 : -1));
   this.ejs(`${this.config.homeURL}/templates/tokensDropdown.ejs`, 'tokensDropdown', {
     tokens,
@@ -1419,8 +1459,8 @@ DecentrEx.prototype.withdraw = function withdraw(addr, amountIn) {
       eventAction: 'Withdraw - invalid amount',
       eventLabel: token.name,
       eventValue: amountIn,
-    });
-    return;
+        .
+        ......return;
   }
   utility.call(
     this.web3,
@@ -1873,6 +1913,7 @@ DecentrEx.prototype.addPending = function addPending(err, txsIn) {
   });
   this.refresh(() => {}, true, true);
 };
+// this is for updating the URL to #tokenname-baseName after the token is selected from dropDown .
 DecentrEx.prototype.updateUrl = function updateUrl() {
   let tokenName = this.selectedToken.name;
   let baseName = this.selectedBase.name;
@@ -2266,6 +2307,10 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
       });
   });
 };
+/**
+ *
+ * for refreshing the page
+ */
 DecentrEx.prototype.refreshLoop = function refreshLoop() {
   const self = this;
   function loop() {

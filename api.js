@@ -1,6 +1,11 @@
 /* eslint-env browser */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
+/**
+ *
+ */
+
+
 const Web3 = require('web3');
 const request = require('request');
 const async = require('async');
