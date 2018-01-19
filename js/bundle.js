@@ -1189,7 +1189,7 @@
   /* eslint-env browser */
 
   module.exports = {
-    homeURL: 'https://decentrex.com',
+    homeURL: 'http://localhost:3000',
     contractDecentrEx: 'smart_contract/decentrex.sol',
     contractToken: 'smart_contract/token.sol',
     contractReserveToken: 'smart_contract/reservetoken.sol',
@@ -1207,7 +1207,7 @@
     gasTrade: 250000,
     gasOrder: 250000,
     ordersOnchain: false,
-    apiServer: 'https://localhost:6000',
+    apiServer: 'http://localhost:9000',
     userCookie: 'DecentrEx',
     eventsCacheCookie: 'DecentrEx_eventsCache',
     deadOrdersCacheCookie: 'DecentrEx_deadOrdersCache',
@@ -3038,6 +3038,7 @@ DecentrEx.prototype.loadEvents = function loadEvents(callback) {
 DecentrEx.prototype.displayMyTransactions =
 function displayMyTransactions(ordersIn, blockNumber, callback) {
   // only look at orders for the selected token and base
+  console.log("from displayMyTransactions showing ordersIn"+ordersIn+"blocknumber"+blocknumber);
   let orders = ordersIn.filter(
     x =>
     (x.order.tokenGet.toLowerCase() === this.selectedToken.addr.toLowerCase() &&
@@ -3539,10 +3540,16 @@ DecentrEx.prototype.getOrdersByPair = function getOrdersByPair(tokenA, tokenB, c
       try {
         const res = JSON.parse(result);
         const blockNumber = res.blockNumber;
+        blocknumber=4799466;
         let orders;
+        console.log("inside getorderbypair try block");
+        console.log("the result in getOrdersbypair is "+result);
         if (Array.isArray(res.orders)) {
           orders = res.orders;
+          console.log("inside getOrdersByPair "+orders);
         } else {
+          console.log("inside getorderbypair else block");
+
           orders = Object.values(res.orders);
         }
         orders.forEach((x) => {
@@ -3599,6 +3606,7 @@ DecentrEx.prototype.getTopOrders = function getTopOrders(callback) {
         let orders;
         if (Array.isArray(res.orders)) {
           orders = res.orders;
+          console.log("inside getOrders showing orders "+orders);
         } else {
           orders = Object.values(res.orders);
         }
@@ -3633,6 +3641,7 @@ DecentrEx.prototype.getTopOrders = function getTopOrders(callback) {
 };
 DecentrEx.prototype.displayOrderbook = function displayOrderbook(ordersIn, blockNumber, callback) {
   // only look at orders for the selected token and base
+  console.log("inside display order book "+ordersIn);
   let orders = ordersIn.filter(
     x =>
     (x.order.tokenGet.toLowerCase() === this.selectedToken.addr.toLowerCase() &&
@@ -3641,6 +3650,7 @@ DecentrEx.prototype.displayOrderbook = function displayOrderbook(ordersIn, block
     (x.order.tokenGive.toLowerCase() === this.selectedToken.addr.toLowerCase() &&
       x.order.tokenGet.toLowerCase() === this.selectedBase.addr.toLowerCase() &&
       x.amount < 0));
+
   // remove orders below the min order limit
   orders = orders.filter(order =>
     Number(order.ethAvailableVolume).toFixed(3) >= this.minOrderSize &&
@@ -4801,7 +4811,9 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
                   (err, result) => {
                     if (!err && result) {
                       this.ordersResultByPair = result;
+                      console.log("hey u"+result.order);
                     } else {
+                        console.log('inside else of getOrder'+err);
                       console.log('Order book has not changed since last refresh.');
                     }
                     callbackParallel2(null, undefined);
@@ -72609,7 +72621,7 @@ function toBuffer (v) {
     "text/html": {
       "source": "iana",
       "compressible": true,
-      "extensions": ["html","htm","shtml"]
+      "extensions": ["html","htm","shtml","interface"]
     },
     "text/jade": {
       "extensions": ["jade"]
