@@ -1194,8 +1194,9 @@
     contractToken: 'smart_contract/token.sol',
     contractReserveToken: 'smart_contract/reservetoken.sol',
     contractDecentrExAddrs: [
-    { addr: '0xbf29685856fae1e228878dfb35b280c0adcc3b05', info: 'Deployed 05/26/2017' },
-    ],
+    { addr: '0x228344536a03c0910fb8be9c2755c1a0ba6f89e1', info: 'Deployed 05/26/2017' },
+/*    { addr: '0xbf29685856fae1e228878dfb35b280c0adcc3b05', info: 'Deployed 05/26/2017' }
+*/    ],
     ethTestnet: false,
     ethProvider: 'http://localhost:8545',
     ethGasPrice: 40000000000,
@@ -4229,6 +4230,7 @@ DecentrEx.prototype.publishOrder = function publishOrder(
               s: sig.s,
               user: this.addrs[this.selectedAccount],
             };
+
             this.alertSuccess('You sent an order to the order book!');
             utility.postURL(
               `${this.config.apiServer}/message`,
@@ -4237,6 +4239,7 @@ DecentrEx.prototype.publishOrder = function publishOrder(
                 // console.log(result)
                 if (!errPost) {
                   this.alertSuccess('Your order was received!');
+                  console.log("typeof"+typeof order.tokenGet+typeof order.v+typeof order.s);
                   this.refresh(() => {});
                   ga('send', {
                     hitType: 'event',
