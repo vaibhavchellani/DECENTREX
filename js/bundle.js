@@ -1215,6 +1215,10 @@
     ordersCacheCookie: 'DecentrEx_ordersCache',
     etherscanAPIKey: 'KF9ADFTHP4WJF1GV3WHJZCTFZIN5XZUXG1',
     tokens: [
+    //ropsten only
+    { addr: '0x9b36299714ef563af159d6cf45e43e392aa0187c', name: 'VEMS', decimals: 18 },
+
+
     { addr: '0x0000000000000000000000000000000000000000', name: 'ETH', decimals: 18 },
     { addr: '0x53b49e0eaf4a1b9b0233ae41089cbb656dce6df7', name: 'NEW', decimals: 18 },
 
@@ -1888,7 +1892,9 @@
     { addr: '0x7a41e0517a5eca4fdbc7fbeba4d4c47b9ff6dc63', name: 'ZSC', decimals: 18 }
     ],
     defaultPair: { token: '1ST', base: 'ETH' },
+    
     pairs: [
+    { token: 'VEMS', base: 'ETH' },
     { token: 'NEW', base: 'ETH' },  
     { token: '0ED', base: 'ETH' },
     { token: '10MT', base: 'ETH' },
