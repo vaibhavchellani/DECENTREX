@@ -16,6 +16,7 @@
     const keythereum = require('keythereum');
     const ethUtil = require('ethereumjs-util');
     const BigNumber = require('bignumber.js');
+    var cors = require('cors');
 
     module.exports = (config) => {
       const utility = {};

@@ -5,6 +5,7 @@
     "bignumber.js": "4.0.1",
     "command-line-args": "3.0.1",
     "command-line-usage": "3.0.3",
+    "cors": "^2.8.4",
     "datejs": "1.0.0-rc3",
     "ethereumjs-abi": "0.6.4",
     "ethereumjs-testrpc": "1.2.1",
