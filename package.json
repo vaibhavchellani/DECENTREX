@@ -19,15 +19,13 @@
     "stats-lite": "^2.0.4",
     "web3": "0.17.0-alpha"
   },
-
   "devDependencies": {
     "eslint": "3.18.0",
     "eslint-config-airbnb-base": "11.1.2",
     "eslint-plugin-import": "2.2.0",
     "lite-server": "^2.3.0"
   },
-
-  "scripts": {    
+  "scripts": {
     "dev": "lite-server"
   }
 }

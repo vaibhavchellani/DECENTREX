@@ -4123,8 +4123,9 @@ DecentrEx.prototype.order = function order(direction, amount, price, expires, re
     if (blockNumber >= orderObj.nextExpiration) {
       if (orderObj.nextExpiration === 0) {
         orderObj.nextExpiration = Number(orderObj.expires) + blockNumber;
-        orderObj.nonce = utility.getRandomInt(0,
-          Math.pow(2, 32)); // eslint-disable-line no-restricted-properties
+        //orderObj.nonce = utility.getRandomInt(0,
+         // Math.pow(2, 32)); // eslint-disable-line no-restricted-properties
+         orderObj.nonce=35;
         this.publishOrder(
           orderObj.baseAddr,
           orderObj.tokenAddr,
@@ -4458,6 +4459,8 @@ DecentrEx.prototype.trade = function trade(kind, order, inputAmount) {
                   });
               } else if (utility.weiToEth(availableVolume,
                 this.getDivisor(this.selectedToken)) < this.minOrderSize) {
+                console.log("from else "+utility.weiToEth(availableVolume,
+                this.getDivisor(this.selectedToken))+this.minOrderSize);
                 this.alertError(
                   "You cannot trade this order because it already traded. Someone else already traded this order and the order book hasn't updated yet.");
                 ga('send', {
