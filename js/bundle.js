@@ -1190,7 +1190,7 @@
   /* eslint-env browser */
 
   module.exports = {
-    homeURL: 'http://0.0.0.0:3000',
+    homeURL: 'http://54.169.130.29:3000',
     contractDecentrEx: 'smart_contract/decentrex.sol',
     contractToken: 'smart_contract/token.sol',
     contractReserveToken: 'smart_contract/reservetoken.sol',
@@ -1209,7 +1209,7 @@
     gasTrade: 250000,
     gasOrder: 250000,
     ordersOnchain: false,
-    apiServer: 'http://0.0.0.0:9000',
+    apiServer: 'http://54.169.130.29:9000',
     userCookie: 'DecentrEx',
     eventsCacheCookie: 'DecentrEx_eventsCache',
     deadOrdersCacheCookie: 'DecentrEx_deadOrdersCache',
