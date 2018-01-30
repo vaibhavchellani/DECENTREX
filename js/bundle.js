@@ -4123,9 +4123,9 @@ DecentrEx.prototype.order = function order(direction, amount, price, expires, re
     if (blockNumber >= orderObj.nextExpiration) {
       if (orderObj.nextExpiration === 0) {
         orderObj.nextExpiration = Number(orderObj.expires) + blockNumber;
-        //orderObj.nonce = utility.getRandomInt(0,
-         // Math.pow(2, 32)); // eslint-disable-line no-restricted-properties
-         orderObj.nonce=35;
+      orderObj.nonce = utility.getRandomInt(0,
+          Math.pow(2, 32)); // eslint-disable-line no-restricted-properties
+         //orderObj.nonce=35;
         this.publishOrder(
           orderObj.baseAddr,
           orderObj.tokenAddr,
