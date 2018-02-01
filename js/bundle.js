@@ -16,7 +16,6 @@
     const keythereum = require('keythereum');
     const ethUtil = require('ethereumjs-util');
     const BigNumber = require('bignumber.js');
-    var cors = require('cors');
 
     module.exports = (config) => {
       const utility = {};
@@ -1190,7 +1189,7 @@
   /* eslint-env browser */
 
   module.exports = {
-    homeURL: 'http://54.169.130.29:3000',
+    homeURL: 'http://localhost:3000',
     contractDecentrEx: 'smart_contract/decentrex.sol',
     contractToken: 'smart_contract/token.sol',
     contractReserveToken: 'smart_contract/reservetoken.sol',
@@ -1209,7 +1208,7 @@
     gasTrade: 250000,
     gasOrder: 250000,
     ordersOnchain: false,
-    apiServer: 'http://54.169.130.29:9000',
+    apiServer: 'http://localhost:9000',
     userCookie: 'DecentrEx',
     eventsCacheCookie: 'DecentrEx_eventsCache',
     deadOrdersCacheCookie: 'DecentrEx_deadOrdersCache',
@@ -1221,7 +1220,7 @@
 
 
     { addr: '0x0000000000000000000000000000000000000000', name: 'ETH', decimals: 18 },
-    { addr: '0x53b49e0eaf4a1b9b0233ae41089cbb656dce6df7', name: 'NEW', decimals: 18 },
+    /*{ addr: '0x53b49e0eaf4a1b9b0233ae41089cbb656dce6df7', name: 'NEW', decimals: 18 },
 
     { addr: '0x8e10f6bb9c973d61321c25a2b8d865825f4aa57b', name: '0ED', decimals: 18 },
     { addr: '0xe701cd3329057aea9d54300ddd05e41b8d74727a', name: '10MT', decimals: 10 },
@@ -1890,13 +1889,13 @@
     { addr: '0x71f1bc89f38b241f3ebf0d5a013fa2850c63a1d4', name: 'ZDR', decimals: 8 },
     { addr: '0x93e24ce396a9e7d7de4a5bc616cf5fcab0476626', name: 'ZIP', decimals: 8 },
     { addr: '0xe41d2489571d322189246dafa5ebde1f4699f498', name: 'ZRX', decimals: 18 },
-    { addr: '0x7a41e0517a5eca4fdbc7fbeba4d4c47b9ff6dc63', name: 'ZSC', decimals: 18 }
+    { addr: '0x7a41e0517a5eca4fdbc7fbeba4d4c47b9ff6dc63', name: 'ZSC', decimals: 18 }*/
     ],
-    defaultPair: { token: '1ST', base: 'ETH' },
+    defaultPair: { token: 'VEMS', base: 'ETH' },
     
     pairs: [
     { token: 'VEMS', base: 'ETH' },
-    { token: 'NEW', base: 'ETH' },  
+    /*{ token: 'NEW', base: 'ETH' },  
     { token: '0ED', base: 'ETH' },
     { token: '10MT', base: 'ETH' },
     { token: '10MTI', base: 'ETH' },
@@ -2564,7 +2563,7 @@
     { token: 'ZDR', base: 'ETH' },
     { token: 'ZIP', base: 'ETH' },
     { token: 'ZRX', base: 'ETH' },
-    { token: 'ZSC', base: 'ETH' }
+    { token: 'ZSC', base: 'ETH' }*/
     ],
   };
 
@@ -3307,6 +3306,7 @@ DecentrEx.prototype.displayTradesAndChart = function displayTradesAndChart(callb
   // get the trade list
   const events = Object.values(this.eventsCache);
   const trades = [];
+  console.log("important"+events+' '+JSON.stringify(this.eventsCache));
   events.forEach((event) => {
     if (event.event === 'Trade' && event.address === this.config.contractDecentrExAddr) {
       if (event.args.amountGive.toNumber() > 0 && event.args.amountGet.toNumber() > 0) {
@@ -3355,6 +3355,7 @@ DecentrEx.prototype.displayTradesAndChart = function displayTradesAndChart(callb
     }
   });
   trades.sort((a, b) => b.id - a.id);
+  console.log("inportant trades "+trades);
   this.ejs(`${this.config.homeURL}/templates/trades.ejs`, 'trades', {
     selectedAddr: this.addrs[this.selectedAccount],
     selectedToken: this.selectedToken,
@@ -3596,6 +3597,7 @@ DecentrEx.prototype.getReturnTicker = function getTopOrders(callback) {
     if (!err && result !== 'error') {
       try {
         const res = JSON.parse(result);
+        console.log("from 3598,gettoporders,getreturnticker"+res);
         callback(null, res);
       } catch (errCatch) {
         callback(err, this.returnTicker);
@@ -4800,6 +4802,7 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
               (callbackParallel2) => {
                 this.getTopOrders((err, result) => {
                   if (!err && result) {
+                    console.log("the result from getTopOrders is "+JSON.stringify(result));
                     this.topOrdersResult = result;
                   } else {
                     console.log('Top levels have not changed since last refresh.');
@@ -4809,6 +4812,7 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
               },
               (callbackParallel2) => {
                 this.getReturnTicker((err, result) => {
+                  console.log("result from returnTicker is "+JSON.stringify(result));
                   if (!err && result) {
                     this.returnTicker = result;
                   } else {
@@ -4824,9 +4828,9 @@ DecentrEx.prototype.refresh = function refresh(callback, forceEventRead, initMar
                   (err, result) => {
                     if (!err && result) {
                       this.ordersResultByPair = result;
-                      console.log("hey u"+result.order);
+                      console.log("result from getorderbypair"+JSON.stringify(result));
                     } else {
-                        console.log('inside else of getOrder'+err);
+                      console.log('inside else of getOrder'+err);
                       console.log('Order book has not changed since last refresh.');
                     }
                     callbackParallel2(null, undefined);
